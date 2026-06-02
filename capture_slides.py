@@ -68,19 +68,19 @@ def prompt_yes_no(label: str) -> bool:
 
 def sanitize_folder_name(name: str) -> str:
     cleaned = INVALID_WINDOWS_CHARS.sub("_", name).strip().rstrip(".")
-    return cleaned or "未命名章节"
+    return cleaned or "未命名"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="CMOS 课程课件自动截图工具")
-    parser.add_argument("--chapter", help="章节编号，例如 2")
-    parser.add_argument("--title", help='章节名称，例如 "Basic MOS Device Physics"')
-    parser.add_argument("--pages", type=positive_int, help="PPT 总页数，例如 50")
+    parser = argparse.ArgumentParser(description="AutoSlideCapture 自动截图工具")
+    parser.add_argument("--chapter", help="编号，例如 1")
+    parser.add_argument("--title", help='标题或任务名称，例如 "Demo Slides"')
+    parser.add_argument("--pages", type=positive_int, help="需要截图的总页数，例如 20")
     parser.add_argument("--interval", type=non_negative_float, help="翻页等待时间（秒），例如 0.2")
     parser.add_argument(
         "--select-region",
         action="store_true",
-        help="重新手动框选 PPT 区域并覆盖已保存区域",
+        help="重新手动框选截图区域并覆盖已保存区域",
     )
     return parser.parse_args()
 
@@ -125,11 +125,11 @@ def restore_console_window() -> None:
 
 
 def select_region() -> Dict[str, int]:
-    print("进入框选模式：请先点击 PPT 区域左上角，再点击右下角。")
+    print("进入框选模式：请先点击截图区域左上角，再点击右下角。")
 
     points = []
     root = tk.Tk()
-    root.title("选择 PPT 区域")
+    root.title("选择截图区域")
     root.attributes("-fullscreen", True)
     root.attributes("-topmost", True)
     root.attributes("-alpha", 0.25)
@@ -209,7 +209,7 @@ def region_to_box(region: Dict[str, int]) -> Tuple[int, int, int, int]:
 
 
 def countdown_before_capture(seconds: int = 5) -> None:
-    print("请在 5 秒内切换到课件窗口，程序将自动开始截图。")
+    print("请在 5 秒内切换到目标窗口，程序将自动开始截图。")
     for remaining in range(seconds, 0, -1):
         print(remaining, flush=True)
         time.sleep(1)
@@ -242,9 +242,9 @@ def capture_slides(
 def main() -> int:
     args = parse_args()
 
-    chapter = args.chapter or prompt_text("请输入章节编号：")
-    title = args.title or prompt_text("请输入章节名称：")
-    pages = args.pages if args.pages is not None else prompt_positive_int("请输入PPT总页数：")
+    chapter = args.chapter or prompt_text("请输入编号：")
+    title = args.title or prompt_text("请输入标题：")
+    pages = args.pages if args.pages is not None else prompt_positive_int("请输入总页数：")
     interval = (
         args.interval
         if args.interval is not None
@@ -256,11 +256,11 @@ def main() -> int:
 
     safe_chapter = sanitize_folder_name(str(chapter))
     safe_title = sanitize_folder_name(title)
-    output_dir = CAPTURES_DIR / f"第{safe_chapter}章{safe_title}"
+    output_dir = CAPTURES_DIR / f"{safe_chapter}_{safe_title}"
 
     if should_select_region or not REGION_FILE.exists():
-        print("准备进入框选模式。请先确保课件已经打开并停留在第一页。")
-        print("程序会先最小化 PowerShell，然后请点击 PPT 区域左上角和右下角。")
+        print("准备进入框选模式。请先确保目标窗口已经打开并停留在第一页。")
+        print("程序会先最小化 PowerShell，然后请点击截图区域左上角和右下角。")
         input("准备好后按回车")
         minimize_console_window()
         time.sleep(1)
