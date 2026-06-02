@@ -14,6 +14,9 @@
 - 仓库名称：AutoSlideCapture
 - README 标题：AutoSlideCapture
 - 项目描述：用于按页自动截取目标窗口并保存为连续图片的轻量本地工具
+- 推送分支：`main`
+- 推送状态：已推送到 GitHub
+- 优化提交：`bd2be65`，Generalize project as AutoSlideCapture
 
 ## 已检查内容
 
