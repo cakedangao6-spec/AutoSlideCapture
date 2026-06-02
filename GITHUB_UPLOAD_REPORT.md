@@ -13,7 +13,7 @@
 - GitHub 仓库：https://github.com/cakedangao6-spec/AutoSlideCapture
 - 仓库名称：AutoSlideCapture
 - README 标题：AutoSlideCapture
-- 项目描述：用于按页自动截取目标窗口并保存为连续图片的轻量本地工具
+- 项目描述：A lightweight Python tool for automatically capturing a selected window region page by page.
 - 推送分支：`main`
 - 推送状态：已推送到 GitHub
 - 优化提交：`bd2be65`，Generalize project as AutoSlideCapture
