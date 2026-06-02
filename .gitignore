@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local runtime configuration
+capture_region.json
+
+# Generated outputs
+captures/
+outputs/
+output/
+dist/
+build/
+*.pptx
+*.ppt
+
+# Course/private materials
+pdf/
+*.pdf
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+~$*
+
+# OS/editor metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
